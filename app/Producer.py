@@ -40,8 +40,6 @@ class Producer:
         try:
             soup = BeautifulSoup(html_document.content, 'html.parser') 
             print(soup)
-            #for link in soup.find_all('a'): 
-            #    print(link.get('href'))   
             return soup
         except Exception as e:
             print("Error while making soup:", e)
