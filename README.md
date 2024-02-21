@@ -4,4 +4,4 @@ Leetcode is so cool, I lolve Leecode coding challenges.
 # How to make it work
 
 Step 1: Donwload the latest version of Python
-Step 2: 
+Step 2: Run "pip install -r requirements.txt" 
