@@ -4,7 +4,8 @@ from Producer import Producer
 from queue import Queue
 class Consumer:
 
-    htmlQueue = deque()
+    htmlQueue = deque() #queue for html
+    urlQueue = deque() #queue for url
 
     def __init__(self):
         self.htmlQueue = deque() #good way of storing data as queue
