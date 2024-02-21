@@ -17,3 +17,4 @@ class Manager:
     def Launch(self):
         print("Started Manager")
         self.prod1.startWorking(self.dataPath)
+        self.cons1.startWorking(self.prod1)
