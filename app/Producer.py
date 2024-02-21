@@ -1,7 +1,6 @@
 from queue import Queue
 from bs4 import BeautifulSoup
 import requests 
-import re 
 
 class Producer:
     queue = Queue()
@@ -14,16 +13,19 @@ class Producer:
         print("Trying to read the data")
         try:
             file = open(dataPath, 'r')
-            url = file.readline().strip() #Strip for the empty spaces
-            print(url)
-            return url
+            while file:
+                url = file.readline().strip() #Strip for the empty spaces
+                if url == "":
+                    break
+                else:
+                    self.extractMarkup(url)
+            file.close()
         except Exception as e:
             print("Error while reading data" + e)
 
     def requestHTML(self, url: str):
         try:
             response = requests.get(url) 
-
             if response.status_code == 200:
                 print('Success!')
             elif response.status_code == 404:
@@ -32,22 +34,25 @@ class Producer:
             return response
         except Exception as e:
             print("Error while fetching website HTML:", e)
+            return ""
 
     def makeSoup(self, html_document):
         try:
             soup = BeautifulSoup(html_document.content, 'html.parser') 
-            for link in soup.find_all('a',  
-                          attrs={'href': re.compile("^https://")}): 
-                # display the actual urls 
-                print(link.get('href'))   
+            print(soup)
+            #for link in soup.find_all('a'): 
+            #    print(link.get('href'))   
+            return soup
         except Exception as e:
             print("Error while making soup:", e)
+            return ""
         
-    def extractMarkup(self, url: str): #Extract Markup from the queue. wtf is a markup?
+    def extractMarkup(self, url: str): #Extract Markup from the URL. wtf is a markup?
         html_document = self.requestHTML(url)
-        self.makeSoup(html_document)
+        soup = self.makeSoup(html_document)
+        self.queue.put(soup)
 
     def startWorking(self, dataPath: str):
-        url = self.readURL(dataPath)
-        self.extractMarkup(url)
-        
+        self.readURL(dataPath)
+        print("Finished working", self.queue.qsize())
+
