@@ -1,6 +1,5 @@
 from Producer import Producer
 from Consumer import Consumer
-
 import asyncio
 
 class Manager:
@@ -15,14 +14,14 @@ class Manager:
         self.cons1 = cons
         self.prod1 = prod
     
-    async def scream(self):
+    async def consumerTask(self):
         while True:
             await self.cons1.startWorking(self.prod1)
 
-    async def shout(self):
+    async def producerTask(self):
         await self.prod1.startWorking(self.dataPath)
     
     async def Launch(self):
         print("Started Manager")
-        task = asyncio.create_task(self.scream())
-        await self.shout()
+        task = asyncio.create_task(self.consumerTask())
+        await self.producerTask()

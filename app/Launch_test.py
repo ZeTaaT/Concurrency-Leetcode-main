@@ -2,15 +2,13 @@ import unittest
 from unittest import IsolatedAsyncioTestCase
 from os.path import exists
 from Producer import Producer
+from Consumer import Consumer
 
 #Testing all the processes in the project
-
-events=[]
 
 class Test(IsolatedAsyncioTestCase): 
       
     def setUp(self): 
-        events.append("setUp")
         pass
 
     #Checks if the fake file exists in the current context
@@ -24,12 +22,14 @@ class Test(IsolatedAsyncioTestCase):
         dataPath = "../fakeData/fakeData1.txt"
         self.assertEqual(exists(dataPath), True) 
 
-    async def test_producer_works(self):
-        events.append("test_response")
+    async def test_producer_consumer_works(self):
         dataPath = "../fakeData/testData1.txt"
         test_prod = Producer()
+        test_cons = Consumer()
         await test_prod.startWorking(dataPath)
-        self.assertEqual(not test_prod.queueHtml.empty(), True) 
+        await test_cons.startWorking(test_prod, False)
+        self.assertEqual(test_prod.queueHtml.empty(), True) 
+        self.assertEqual(len(test_cons.htmlDequeue) == 0, True) 
 
 
 if __name__ == "__main__":
