@@ -11,7 +11,7 @@ Step 2.5(optional): Run "python ./Launch_test.py" while in the \app directory to
 
 Step 3: Run "python ./Launch.py" while in the \app directory
 
-Step 4: If the code is not running, check your environment 
+Step 4: If the code is not running, check your environments and downloads
 
 
 # Making fakeData for testing
