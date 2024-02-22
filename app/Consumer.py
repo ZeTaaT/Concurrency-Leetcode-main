@@ -1,6 +1,6 @@
 from collections import deque
 from bs4 import BeautifulSoup
-from Producer import Producer
+from app.Producer import Producer
 from queue import Queue
 
 import asyncio
