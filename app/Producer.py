@@ -32,10 +32,8 @@ class Producer:
         try:
             response = requests.get(url) 
             if response.status_code == 200:
-                print('Success! Url found!')
                 return response
             elif response.status_code == 404:
-                print('Not Found.')
                 return ""
         except Exception as e:
             print("Error while fetching website HTML:", e)
@@ -43,7 +41,6 @@ class Producer:
 
     async def makeSoup(self, html_document):
         try:
-            print("Making soup")
             soup = BeautifulSoup(html_document.content, 'html.parser') 
             return soup
         except Exception as e:
@@ -51,7 +48,6 @@ class Producer:
             return ""
         
     async def extractMarkup(self, url: str): #Extract Markup from the URL. wtf is a markup?
-        print("Trying to get HTML")
         html_document = await self.requestHTML(url)
         soup = await self.makeSoup(html_document)
         if(soup != ""):

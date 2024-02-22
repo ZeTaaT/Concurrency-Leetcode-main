@@ -2,18 +2,7 @@ from Manager import Manager
 from Producer import Producer
 from Consumer import Consumer
 import asyncio
-import unittest 
   
-class TestStringMethods(unittest.TestCase): 
-      
-    def setUp(self): 
-        pass
-  
-    # Returns True if the string contains 4 a. 
-    def test_strings_a(self): 
-        self.assertEqual( 'a'*4, 'aaaa') 
-
-
 async def main():
     dataPath = "../fakeData/fakeData1.txt"
     cons1 = Consumer()
