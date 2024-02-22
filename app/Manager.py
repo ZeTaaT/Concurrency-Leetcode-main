@@ -1,6 +1,8 @@
 from Producer import Producer
 from Consumer import Consumer
 
+import asyncio
+
 class Manager:
 
     dataPath = "fakeData.txt"
@@ -16,5 +18,6 @@ class Manager:
 
     async def Launch(self):
         print("Started Manager")
+        
         await self.prod1.startWorking(self.dataPath)
-        self.cons1.startWorking(self.prod1)
+        await self.cons1.startWorking(self.prod1)

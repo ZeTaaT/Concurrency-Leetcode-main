@@ -2,6 +2,8 @@ from queue import Queue
 from bs4 import BeautifulSoup
 import requests 
 
+import asyncio
+
 class Producer:
     queueHtml = Queue()
     queueUrl = Queue()
@@ -52,10 +54,12 @@ class Producer:
         print("Trying to get HTML")
         html_document = await self.requestHTML(url)
         soup = await self.makeSoup(html_document)
+        self.queueHtml.put(soup)
         self.queueUrl.put(url)
 
     async def startWorking(self, dataPath: str):
         print("Manager started working")
         await self.readURL(dataPath)
         print("Finished working", self.queueHtml.qsize())
+        return self.queueHtml, self.queueUrl
 

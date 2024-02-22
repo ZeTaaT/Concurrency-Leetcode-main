@@ -12,7 +12,7 @@ async def main():
     manager = Manager(cons1, prod1, dataPath)
     try:
         print("Starting Manager")
-        await manager.Launch()
+        manager.Launch()
         print("Manager managed the job")
     except Exception as e:
         print(e)
