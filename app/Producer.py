@@ -51,19 +51,11 @@ class Producer:
     async def extractMarkup(self, url: str): #Extract Markup from the URL. wtf is a markup?
         print("Trying to get HTML")
         html_document = await self.requestHTML(url)
-        print("Got HTML")
-        print("Trying to get soup")
         soup = await self.makeSoup(html_document)
-        print("Got soup")
-        print("Trying to put soup")
-        await self.queueHtml.put(soup)
-        print("Soup put")
-        print("Trying to put url")
-        await self.queueUrl.put(url)
-        print("Url put")
+        self.queueUrl.put(url)
 
     async def startWorking(self, dataPath: str):
         print("Manager started working")
         await self.readURL(dataPath)
-        print("Finished working", await self.queueHtml.qsize())
+        print("Finished working", self.queueHtml.qsize())
 
