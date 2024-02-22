@@ -1,8 +1,8 @@
 import unittest
 from unittest import IsolatedAsyncioTestCase
 from os.path import exists
-from Producer import Producer
-from Consumer import Consumer
+from app.Producer import Producer
+from app.Consumer import Consumer
 
 #Testing all the processes in the project
 

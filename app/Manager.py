@@ -1,10 +1,10 @@
-from Producer import Producer
-from Consumer import Consumer
+from app.Producer import Producer
+from app.Consumer import Consumer
 import asyncio
 
 class Manager:
 
-    dataPath = "fakeData.txt"
+    dataPath = "../fakeData/fakeData1.txt"
 
     cons1 = Consumer()
     prod1 = Producer()
