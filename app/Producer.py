@@ -17,7 +17,7 @@ class Producer:
             file = open(dataPath, 'r')
             while file:
                 url = file.readline().strip() #Strip for the empty spaces
-                if url == "":
+                if url == "": #If list is empty exit
                     break
                 else:
                     await self.extractMarkup(url)
@@ -25,7 +25,7 @@ class Producer:
         except Exception as e:
             print("Error while reading data" + e)
 
-    async def requestHTML(self, url: str):
+    async def requestHTML(self, url: str): #Get HTML from the URL
         try:
             response = requests.get(url) 
             if response.status_code == 200:
@@ -36,7 +36,7 @@ class Producer:
             print("Error while fetching website HTML:", e)
             return ""
 
-    async def makeSoup(self, html_document):
+    async def makeSoup(self, html_document): #Make the HTML into a soup(More ordered HTML that is used in the future to sort out markups)
         try:
             soup = BeautifulSoup(html_document.content, 'html.parser') 
             return soup
@@ -44,7 +44,7 @@ class Producer:
             print("Error while making soup:", e)
             return ""
         
-    async def extractMarkup(self, url: str): #Extract Markup from the URL. wtf is a markup?
+    async def extractMarkup(self, url: str): #Extract Markup from the URL.
         html_document = await self.requestHTML(url)
         soup = await self.makeSoup(html_document)
         if(soup != ""):
