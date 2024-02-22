@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from Producer import Producer
 from queue import Queue
 
+import asyncio
 class Consumer:
 
     htmlDequeue = deque() #queue for html
@@ -18,6 +19,9 @@ class Consumer:
         while not queueHtml.empty():
             self.htmlDequeue.append(await self.extractHyper(queueHtml.get()))
             self.urlDequeue.append(queueUrl.get())
+        print("Queue is empty")
+        await asyncio.sleep(1)
+
 
     async def extractHyper(self, soup: BeautifulSoup):
         listHyper = []
