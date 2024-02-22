@@ -12,12 +12,12 @@ class Consumer:
         self.htmlQueue = deque() #good way of storing data as queue
 
     async def readQueue(self, prod: Producer):
+        print("Consumer reading the queue")
         queueHtml = prod.queueHtml
         queueUrl = prod.queueUrl
         while not queueHtml.empty():
             self.htmlDequeue.append(await self.extractHyper(queueHtml.get()))
             self.urlDequeue.append(queueUrl.get())
-        print("code")
 
     async def extractHyper(self, soup: BeautifulSoup):
         listHyper = []
@@ -29,6 +29,7 @@ class Consumer:
 
 
     async def startWorking(self, prod: Producer):
+        print("Consumer is getting the stuff")
         await self.readQueue(prod)
         while len(self.htmlDequeue):
             print(self.urlDequeue.pop())

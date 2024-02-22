@@ -35,7 +35,6 @@ class Producer:
                 print('Success! Url found!')
             elif response.status_code == 404:
                 print('Not Found.')
-
             return response
         except Exception as e:
             print("Error while fetching website HTML:", e)
@@ -56,10 +55,10 @@ class Producer:
         soup = await self.makeSoup(html_document)
         self.queueHtml.put(soup)
         self.queueUrl.put(url)
+        await asyncio.sleep(1)
 
     async def startWorking(self, dataPath: str):
         print("Manager started working")
         await self.readURL(dataPath)
         print("Finished working", self.queueHtml.qsize())
-        return self.queueHtml, self.queueUrl
 
