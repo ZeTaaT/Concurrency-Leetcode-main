@@ -4,12 +4,12 @@ import requests
 
 import asyncio
 
-class Producer:
+class Producer: #Collect Html data
     queueHtml = Queue()
     queueUrl = Queue()
 
     def __init__(self): #Constructor
-        self.queue = Queue(maxsize=10000) #queue from queue are more effecient than deque becuase of threading communications
+        self.queue = Queue(maxsize=10000) #queue from queue are more effecient than deque becuase of threading communications, although am not using threads
 
     async def readURL(self, dataPath: str): #read URLs from the list file
 
@@ -47,12 +47,12 @@ class Producer:
     async def extractMarkup(self, url: str): #Extract Markup from the URL.
         html_document = await self.requestHTML(url)
         soup = await self.makeSoup(html_document)
-        if(soup != ""):
+        if(soup != ""): #If the HTML not empty, put html into a queue as well as the url it was taken from
             self.queueHtml.put(soup)
             self.queueUrl.put(url)
         await asyncio.sleep(0.001)
 
-    async def startWorking(self, dataPath: str):
+    async def startWorking(self, dataPath: str): #Start the Producer
         await self.readURL(dataPath)
         print("Finished working", self.queueHtml.qsize())
 
