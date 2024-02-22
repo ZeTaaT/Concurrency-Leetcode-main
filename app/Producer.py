@@ -9,7 +9,7 @@ class Producer:
     def __init__(self): #Constructor
         self.queue = Queue(maxsize=10000) #queue from queue are more effecient than deque becuase of threading communications
 
-    def readURL(self, dataPath: str): #read URLs from the list file
+    async def readURL(self, dataPath: str): #read URLs from the list file
 
         print("Trying to read the data")
         try:
@@ -17,18 +17,20 @@ class Producer:
             while file:
                 url = file.readline().strip() #Strip for the empty spaces
                 if url == "":
+                    print("Empty Url")
                     break
                 else:
-                    self.extractMarkup(url)
+                    print("URL read")
+                    await self.extractMarkup(url)
             file.close()
         except Exception as e:
             print("Error while reading data" + e)
 
-    def requestHTML(self, url: str):
+    async def requestHTML(self, url: str):
         try:
             response = requests.get(url) 
             if response.status_code == 200:
-                print('Success!')
+                print('Success! Url found!')
             elif response.status_code == 404:
                 print('Not Found.')
 
@@ -37,22 +39,31 @@ class Producer:
             print("Error while fetching website HTML:", e)
             return ""
 
-    def makeSoup(self, html_document):
+    async def makeSoup(self, html_document):
         try:
+            print("Making soup")
             soup = BeautifulSoup(html_document.content, 'html.parser') 
-            print(soup)
             return soup
         except Exception as e:
             print("Error while making soup:", e)
             return ""
         
-    def extractMarkup(self, url: str): #Extract Markup from the URL. wtf is a markup?
-        html_document = self.requestHTML(url)
-        soup = self.makeSoup(html_document)
-        self.queueHtml.put(soup)
-        self.queueUrl.put(url)
+    async def extractMarkup(self, url: str): #Extract Markup from the URL. wtf is a markup?
+        print("Trying to get HTML")
+        html_document = await self.requestHTML(url)
+        print("Got HTML")
+        print("Trying to get soup")
+        soup = await self.makeSoup(html_document)
+        print("Got soup")
+        print("Trying to put soup")
+        await self.queueHtml.put(soup)
+        print("Soup put")
+        print("Trying to put url")
+        await self.queueUrl.put(url)
+        print("Url put")
 
-    def startWorking(self, dataPath: str):
-        self.readURL(dataPath)
-        print("Finished working", self.queueHtml.qsize())
+    async def startWorking(self, dataPath: str):
+        print("Manager started working")
+        await self.readURL(dataPath)
+        print("Finished working", await self.queueHtml.qsize())
 
