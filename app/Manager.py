@@ -15,9 +15,13 @@ class Manager:
         self.cons1 = cons
         self.prod1 = prod
     
+    async def scream(self):
+        while True:
+            await self.cons1.startWorking(self.prod1)
+            await asyncio.sleep(1)
 
     async def Launch(self):
         print("Started Manager")
-        
+        task=asyncio.create_task(self.scream())
+
         await self.prod1.startWorking(self.dataPath)
-        await self.cons1.startWorking(self.prod1)
