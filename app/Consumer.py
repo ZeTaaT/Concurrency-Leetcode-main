@@ -25,11 +25,12 @@ class Consumer:
 
     async def extractHyper(self, soup: BeautifulSoup):
         listHyper = []
-
-        for link in soup.find_all('a'): 
-           listHyper.append(link.get('href'))
-        
-        return listHyper
+        try:
+            for link in soup.find_all('a'): 
+                listHyper.append(link.get('href'))
+            return listHyper
+        except Exception as e:
+            print("Error while extracting hyperlinks" + e)
 
 
     async def startWorking(self, prod: Producer):

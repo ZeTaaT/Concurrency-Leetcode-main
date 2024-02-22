@@ -9,10 +9,12 @@ class TestStringMethods(unittest.TestCase):
         pass
   
     #Checks if the file exists in the current context
-    def test_files_exist(self): 
+    def test_file_exists(self): 
+
         dataPath = "../fakeData/fakeData1.txt"
-        
         self.assertEqual(exists(dataPath), True) 
+
+    def 
 
 
 if __name__ == "__main__":
