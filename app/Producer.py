@@ -33,9 +33,10 @@ class Producer:
             response = requests.get(url) 
             if response.status_code == 200:
                 print('Success! Url found!')
+                return response
             elif response.status_code == 404:
                 print('Not Found.')
-            return response
+                return ""
         except Exception as e:
             print("Error while fetching website HTML:", e)
             return ""
@@ -53,8 +54,9 @@ class Producer:
         print("Trying to get HTML")
         html_document = await self.requestHTML(url)
         soup = await self.makeSoup(html_document)
-        self.queueHtml.put(soup)
-        self.queueUrl.put(url)
+        if(soup != ""):
+            self.queueHtml.put(soup)
+            self.queueUrl.put(url)
         await asyncio.sleep(1)
 
     async def startWorking(self, dataPath: str):
