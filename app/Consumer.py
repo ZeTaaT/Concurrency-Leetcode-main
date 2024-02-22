@@ -11,15 +11,15 @@ class Consumer:
     def __init__(self):
         self.htmlQueue = deque() #good way of storing data as queue
 
-    def readQueue(self, prod: Producer):
+    async def readQueue(self, prod: Producer):
         queueHtml = prod.queueHtml
         queueUrl = prod.queueUrl
         while not queueHtml.empty():
-            self.htmlDequeue.append(self.extractHyper(queueHtml.get()))
+            self.htmlDequeue.append(await self.extractHyper(queueHtml.get()))
             self.urlDequeue.append(queueUrl.get())
         print("code")
 
-    def extractHyper(self, soup: BeautifulSoup):
+    async def extractHyper(self, soup: BeautifulSoup):
         listHyper = []
 
         for link in soup.find_all('a'): 
@@ -28,8 +28,8 @@ class Consumer:
         return listHyper
 
 
-    def startWorking(self, prod: Producer):
-        self.readQueue(prod)
+    async def startWorking(self, prod: Producer):
+        await self.readQueue(prod)
         while len(self.htmlDequeue):
             print(self.urlDequeue.pop())
             print(self.htmlDequeue.pop())
