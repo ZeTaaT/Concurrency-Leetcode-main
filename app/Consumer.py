@@ -2,22 +2,35 @@ from collections import deque
 from bs4 import BeautifulSoup
 from Producer import Producer
 from queue import Queue
+
 class Consumer:
 
-    htmlQueue = deque() #queue for html
-    urlQueue = deque() #queue for url
+    htmlDequeue = deque() #queue for html
+    urlDequeue = deque() #queue for url
 
     def __init__(self):
         self.htmlQueue = deque() #good way of storing data as queue
 
-    def readQueue(self, queue: Queue):
-        while not queue.empty():
-            self.htmlQueue.append(self.extractHyper(queue.get()))
+    def readQueue(self, prod: Producer):
+        queueHtml = prod.queueHtml
+        queueUrl = prod.queueUrl
+        while not queueHtml.empty():
+            self.htmlDequeue.append(self.extractHyper(queueHtml.get()))
+            self.urlDequeue.append(queueUrl.get())
         print("code")
 
     def extractHyper(self, soup: BeautifulSoup):
+        listHyper = []
+
         for link in soup.find_all('a'): 
-           print(link.get('href'))   
+           listHyper.append(link.get('href'))
+        
+        return listHyper
+
 
     def startWorking(self, prod: Producer):
-        self.readQueue(prod.queue)
+        self.readQueue(prod)
+        while len(self.htmlDequeue):
+            print(self.urlDequeue.pop())
+            print(self.htmlDequeue.pop())
+
