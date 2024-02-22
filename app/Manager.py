@@ -14,7 +14,7 @@ class Manager:
         self.prod1 = prod
     
 
-    def Launch(self):
+    async def Launch(self):
         print("Started Manager")
-        self.prod1.startWorking(self.dataPath)
-        self.cons1.startWorking(self.prod1)
+        await self.prod1.startWorking(self.dataPath)
+        await self.cons1.startWorking(self.prod1)
