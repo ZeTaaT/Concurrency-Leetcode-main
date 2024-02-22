@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import requests 
 
 class Producer:
-    queue = Queue()
+    queueHtml = Queue()
+    queueUrl = Queue()
 
     def __init__(self): #Constructor
         self.queue = Queue(maxsize=10000) #queue from queue are more effecient than deque becuase of threading communications
@@ -48,9 +49,10 @@ class Producer:
     def extractMarkup(self, url: str): #Extract Markup from the URL. wtf is a markup?
         html_document = self.requestHTML(url)
         soup = self.makeSoup(html_document)
-        self.queue.put(soup)
+        self.queueHtml.put(soup)
+        self.queueUrl.put(url)
 
     def startWorking(self, dataPath: str):
         self.readURL(dataPath)
-        print("Finished working", self.queue.qsize())
+        print("Finished working", self.queueHtml.qsize())
 

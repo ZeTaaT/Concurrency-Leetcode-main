@@ -3,7 +3,7 @@ from Consumer import Consumer
 
 class Manager:
 
-    dataPath = "fakeData1.txt"
+    dataPath = "fakeData.txt"
 
     cons1 = Consumer()
     prod1 = Producer()
