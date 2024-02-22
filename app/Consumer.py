@@ -4,7 +4,7 @@ from app.Producer import Producer
 from queue import Queue
 
 import asyncio
-class Consumer:
+class Consumer: #Extract keypoint from HTML data
 
     htmlDequeue = deque() #queue for html
     urlDequeue = deque() #queue for url
@@ -12,7 +12,7 @@ class Consumer:
     def __init__(self):
         self.htmlQueue = deque() #good way of storing data as queue
 
-    async def readQueue(self, prod: Producer):
+    async def readQueue(self, prod: Producer): #Read the queue of urls and htmls
         queueHtml = prod.queueHtml
         queueUrl = prod.queueUrl
         try:
@@ -24,7 +24,7 @@ class Consumer:
             print("Error while adding hyperlinks" + e)
 
 
-    async def extractHyper(self, soup: BeautifulSoup):
+    async def extractHyper(self, soup: BeautifulSoup): #Extract needed element, in this case hyperlinks
         listHyper = []
         try:
             for link in soup.find_all('a'): 
@@ -34,13 +34,13 @@ class Consumer:
             print("Error while extracting hyperlinks" + e)
 
 
-    async def startWorking(self, prod: Producer, printStuff: bool = True):
-        await self.readQueue(prod)
-        if(printStuff):
+    async def startWorking(self, prod: Producer, printStuff: bool = True): #Start the Consumers
+        await self.readQueue(prod) #Read the queue of the producer
+        if(printStuff): #Print out all objects in queues
             while len(self.htmlDequeue):
                 print(self.urlDequeue.pop())
                 print(self.htmlDequeue.pop())
-        else:
+        else: #Empty queues
             while len(self.htmlDequeue):
                 self.urlDequeue.pop()
                 self.htmlDequeue.pop()

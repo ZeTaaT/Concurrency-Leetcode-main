@@ -2,7 +2,7 @@ from app.Producer import Producer
 from app.Consumer import Consumer
 import asyncio
 
-class Manager:
+class Manager: #Manage Producer and Consumer
 
     dataPath = "../fakeData/fakeData1.txt"
 
