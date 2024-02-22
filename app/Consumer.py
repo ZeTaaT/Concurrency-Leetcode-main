@@ -19,8 +19,7 @@ class Consumer:
             while not queueHtml.empty():
                 self.htmlDequeue.append(await self.extractHyper(queueHtml.get()))
                 self.urlDequeue.append(queueUrl.get())
-            print("Queue is empty")
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.001)
         except Exception as e:
             print("Error while adding hyperlinks" + e)
 
@@ -35,9 +34,15 @@ class Consumer:
             print("Error while extracting hyperlinks" + e)
 
 
-    async def startWorking(self, prod: Producer):
+    async def startWorking(self, prod: Producer, printStuff: bool = True):
         await self.readQueue(prod)
-        while len(self.htmlDequeue):
-            print(self.urlDequeue.pop())
-            print(self.htmlDequeue.pop())
+        if(printStuff):
+            while len(self.htmlDequeue):
+                print(self.urlDequeue.pop())
+                print(self.htmlDequeue.pop())
+        else:
+            while len(self.htmlDequeue):
+                self.urlDequeue.pop()
+                self.htmlDequeue.pop()
+        
 

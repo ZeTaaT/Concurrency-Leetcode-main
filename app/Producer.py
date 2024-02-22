@@ -13,16 +13,13 @@ class Producer:
 
     async def readURL(self, dataPath: str): #read URLs from the list file
 
-        print("Trying to read the data")
         try:
             file = open(dataPath, 'r')
             while file:
                 url = file.readline().strip() #Strip for the empty spaces
                 if url == "":
-                    print("Empty Url")
                     break
                 else:
-                    print("URL read")
                     await self.extractMarkup(url)
             file.close()
         except Exception as e:
@@ -53,10 +50,9 @@ class Producer:
         if(soup != ""):
             self.queueHtml.put(soup)
             self.queueUrl.put(url)
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.001)
 
     async def startWorking(self, dataPath: str):
-        print("Manager started working")
         await self.readURL(dataPath)
         print("Finished working", self.queueHtml.qsize())
 
