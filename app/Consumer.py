@@ -1,9 +1,9 @@
 from collections import deque
 from bs4 import BeautifulSoup
 from app.Producer import Producer
-from queue import Queue
 
 import asyncio
+
 class Consumer: #Extract keypoint from HTML data
 
     htmlDequeue = deque() #queue for html
