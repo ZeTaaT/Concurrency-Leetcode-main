@@ -1,5 +1,5 @@
-from app.Producer import Producer
-from app.Consumer import Consumer
+from Producer import Producer
+from Consumer import Consumer
 import asyncio
 
 class Manager: #Manage Producer and Consumer

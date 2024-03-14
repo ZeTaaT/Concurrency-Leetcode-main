@@ -14,18 +14,15 @@ class Producer: #Collect Html data
     async def readURL(self, dataPath: str): #read URLs from the list file
 
         try:
-            file = open(dataPath, 'r')
-            while file:
-                url = file.readline().strip() #Strip for the empty spaces
-                if url == "": #If list is empty exit
-                    break
-                else:
+            with open(dataPath, 'r') as file:
+                for url in file:
+                    url = url.strip() #Strip for the empty spaces
                     await self.extractMarkup(url)
-            file.close()
         except Exception as e:
-            print("Error while reading data" + e)
+            print("Error while reading data")
 
     async def requestHTML(self, url: str): #Get HTML from the URL
+
         try:
             response = requests.get(url) 
             if response.status_code == 200:
@@ -33,8 +30,7 @@ class Producer: #Collect Html data
             elif response.status_code == 404:
                 return ""
         except Exception as e:
-            print("Error while fetching website HTML:", e)
-            return ""
+            print("Error while fetching website HTML:")
 
     async def makeSoup(self, html_document): #Make the HTML into a soup(More ordered HTML that is used in the future to sort out markups)
         try:

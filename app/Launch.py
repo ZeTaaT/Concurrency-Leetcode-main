@@ -1,6 +1,6 @@
-from app.Manager import Manager
-from app.Producer import Producer
-from app.Consumer import Consumer
+from Manager import Manager
+from Producer import Producer
+from Consumer import Consumer
 import asyncio
   
 async def main():
