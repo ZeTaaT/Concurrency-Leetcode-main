@@ -5,7 +5,7 @@ from Producer import Producer
 import asyncio
 
 class Consumer: #Extract keypoint from HTML data
-    dataQueue = deque()
+    dataQueue: deque
 
     def __init__(self):
         self.dataQueue = deque() #good way of storing data as queue

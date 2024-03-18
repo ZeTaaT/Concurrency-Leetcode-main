@@ -6,8 +6,8 @@ class Manager: #Manage Producer and Consumer
 
     dataPath = "../fakeData/fakeData1.txt"
 
-    cons1 = Consumer()
-    prod1 = Producer()
+    cons1: Consumer
+    prod1: Producer
 
     def __init__(self, cons: Consumer, prod: Producer, dataPath: str): #!Constructor
         self.dataPath = dataPath

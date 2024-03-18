@@ -5,7 +5,7 @@ import requests
 import asyncio
 
 class Producer: #Collect Html data
-    queueData = Queue()
+    queueData: Queue
 
     def __init__(self): #Constructor
         self.queueData = Queue(maxsize=10000) #queue from queue are more effecient than deque becuase of threading communications, although am not using threads
