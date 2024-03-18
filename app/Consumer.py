@@ -10,7 +10,7 @@ class Consumer: #Extract keypoint from HTML data
     def __init__(self):
         self.dataQueue = deque() #good way of storing data as queue
 
-    async def readQueue(self, prod: Producer): #Read the queue of urls and htmls
+    async def readQueue(self, prod: Producer): #!Read the queue of urls and htmls 
         dataQueue = prod.queueData
         while not dataQueue.empty():
             data = dataQueue.get()
@@ -22,7 +22,7 @@ class Consumer: #Extract keypoint from HTML data
         await asyncio.sleep(0.001)
     
     
-    async def extractHyper(self, soup: BeautifulSoup): #Extract needed element, in this case hyperlinks
+    async def extractHyper(self, soup: BeautifulSoup): #!Extract needed element, in this case hyperlinks
         listHyper = []
         for link in soup.find_all('a'): 
             try:
@@ -33,7 +33,7 @@ class Consumer: #Extract keypoint from HTML data
         return listHyper
 
 
-    async def startWorking(self, prod: Producer, printStuff: bool = True): #Start the Consumers
+    async def startWorking(self, prod: Producer, printStuff: bool = True): #!Start the Consumers
         await self.readQueue(prod) #Read the queue of the producer
         if(printStuff): #Print out all objects in queues
             while len(self.dataQueue):

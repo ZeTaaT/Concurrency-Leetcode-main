@@ -32,7 +32,7 @@ class Producer: #Collect Html data
             return response
 
 
-    async def makeSoup(self, html_document): #Make the HTML into a soup(More ordered HTML that is used in the future to sort out markups)
+    async def makeSoup(self, html_document: requests.Response): #Make the HTML into a soup(More ordered HTML that is used in the future to sort out markups)
         try:
             return BeautifulSoup(html_document.content, 'html.parser') 
         except Exception as e:
