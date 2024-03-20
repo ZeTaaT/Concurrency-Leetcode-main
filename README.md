@@ -1,10 +1,28 @@
-# How to make it work
+# How to set up (Visual Studio Code)
 
-Step 1: Donwload and setup the latest version of Python
+Step 1: Download latest version of Python
 
-Step 2: Run "python -m pip install -r requirements.txt" to install all the dependencies 
+Step 2 (Visual Studio Code): Press Ctrl+Shift+P and type Python:Create Environments to select create .venv
 
-Step 3: Run "python ./Launch.py" while in the \app directory
+Step 3 (Visual Studio Code): Select the Workspace and the latest Python version
+
+Step 4 (Visual Studio Code): Choose the requirements.txt for dependecies to install
+
+Step 5: Run "python ./Launch.py" while in the \app directory
+
+# How to set up (Console)
+
+Step 1: Download latest version of Python
+
+Step 2 (Console): Create a .venv using "python -m venv .venv" command in the command prompt
+
+Step 3 (Console): Type ".venv\Scripts\activate" to activate the environment
+
+Step 4 (Console): Go into the app folder and run "py -m pip install -r requirements.txt" 
+
+Step 5: Add .ignore file to .venv since it doesn't do it automatically
+
+Step 6: Run "python ./Launch.py" while in the \app directory
 
 # Making fakeData for testing
 
